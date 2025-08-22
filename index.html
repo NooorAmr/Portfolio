@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fokir</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Source+Code+Pro:wght@400;600;700;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* =========================
+       CSS RESET + THEME TOKENS
+       ========================= */
+        :root {
+            --primary: #ff305b;
+            /* keep your brand color */
+            --text: #111;
+            --muted: #555;
+            --bg: #fff;
+            --bg-soft: #f1f1f1;
+            --card: #fff;
+            --shadow: 0 10px 25px rgba(0, 0, 0, .08);
+        }
+
+        body.dark {
+            --text: #eaeaea;
+            --muted: #c9c9c9;
+            --bg: #121212;
+            --bg-soft: #1a1a1a;
+            --card: #181818;
+            --shadow: 0 10px 25px rgba(0, 0, 0, .35);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Source Code Pro", monospace;
+            margin: 0 0 10px
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto
+        }
+
+        .line {
+            display: block;
+            width: 120px;
+            height: 2px;
+            background: var(--primary);
+            margin: 6px auto
+        }
+
+        .line.small {
+            width: 70px;
+            margin: 4px auto
+        }
+
+        /* =========================
+       NAVBAR
+       ========================= */
+        .navbar {
+            position: fixed;
+            inset-inline: 0;
+            top: 0;
+            z-index: 1000;
+            background: rgba(128, 128, 128, .8);
+            backdrop-filter: saturate(150%) blur(8px);
+            box-shadow: var(--shadow);
+        }
+
+        .navwrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0
+        }
+
+        .navbarlogo a {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 800
+        }
+
+        .navbarlinks ul {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        .navbarlinks a {
+            color: #fff;
+            padding: 10px 8px;
+            border-radius: 6px;
+            transition: .25s
+        }
+
+        .navbarlinks a:hover,
+        .navbarlinks a.active {
+            color: var(--primary);
+            background: rgba(255, 255, 255, .06)
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .4);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .25s
+        }
+
+        .btn-icon:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .hamburger {
+            display: none
+        }
+
+        /* =========================
+       HERO
+       ========================= */
+        .Hero {
+            height: 100vh;
+            min-height: 520px;
+            position: relative;
+            color: #fff;
+            background: url('images/emile-perron-xrVDYZRGdw4-unsplash.jpg') center/cover no-repeat;
+        }
+
+        .Hero .layer {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .4)
+        }
+
+        .Hero .content {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 0 16px
+        }
+
+        .Hero .content span {
+            font-size: 22px;
+            font-weight: 600
+        }
+
+        .Hero .content h1 {
+            color: var(--primary);
+            font-size: 68px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 12px 0 6px
+        }
+
+        .bonus {
+            display: inline-block
+        }
+
+        .bonus1 {
+            font-size: 26px;
+            letter-spacing: 2px;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 26ch;
+            animation: typing 4s steps(26, end), erase 4s steps(26, end) 4s, cursor .75s step-end infinite;
+            animation-iteration-count: infinite;
+            font-family: "Source Code Pro", monospace;
+        }
+
+        @keyframes cursor {
+            50% {
+                border-color: transparent
+            }
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 26ch
+            }
+        }
+
+        @keyframes erase {
+            from {
+                width: 26ch
+            }
+
+            to {
+                width: 0
+            }
+        }
+
+        /* =========================
+       ABOUT
+       ========================= */
+        .about {
+            padding: 80px 0 20px
+        }
+
+        .about .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center
+        }
+
+        .border {
+            border: 10px solid #555;
+            border-radius: 10px;
+            background: var(--card)
+        }
+
+        .photo-Container-icons {
+            transform: translate(20px, 20px);
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px
+        }
+
+        .awesome-icons {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: grid;
+            place-items: center;
+            transform: translateY(100%);
+            transition: .4s
+        }
+
+        .photo-Container-icons:hover .awesome-icons {
+            transform: translateY(0)
+        }
+
+        .awesome-icons .icons a {
+            color: #fff;
+            font-size: 22px;
+            margin: 0 10px
+        }
+
+        .about .upper h2 {
+            font-size: 34px;
+            font-weight: 700;
+            padding-left: 12px;
+            position: relative
+        }
+
+        .about .upper h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 28px;
+            width: 4px;
+            background: var(--primary)
+        }
+
+        .about .upper p {
+            color: var(--muted)
+        }
+
+        .about .lower .info {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 18px;
+            padding: 0;
+            margin: 14px 0 18px;
+            list-style: none
+        }
+
+        .about .lower .info span {
+            font-weight: 700;
+            color: var(--text)
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: .25s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #ec2403
+        }
+
+        /* =========================
+       SERVICES
+       ========================= */
+        .services {
+            background: var(--bg-soft);
+            padding: 70px 0;
+            text-align: center
+        }
+
+        .services h2 {
+            font-size: 32px;
+            font-weight: 800
+        }
+
+        .services .wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 26px
+        }
+
+        .service-box {
+            background: var(--card);
+            padding: 30px 18px;
+            border-radius: 10px;
+            transition: .3s;
+            box-shadow: var(--shadow)
+        }
+
+        .service-box:hover {
+            transform: translateY(-4px)
+        }
+
+        .service-box .icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            transition: transform .3s
+        }
+
+        .service-box:hover .icon {
+            transform: scale(1.15)
+        }
+
+        .service-box h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 6px
+        }
+
+        .service-box p {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0
+        }
+
+        /* =========================
+       PORTFOLIO
+       ========================= */
+        .our-portfolio {
+            padding: 70px 0;
+            text-align: center
+        }
+
+        .our-portfolio h2 {
+            font-size: 28px
+        }
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 28px 0 34px;
+            flex-wrap: wrap
+        }
+
+        .categories a {
+            font-weight: 700;
+            color: #333;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 0, 0, .08);
+            background: var(--card);
+            box-shadow: var(--shadow);
+            transition: .25s
+        }
+
+        .categories a.active,
+        .categories a:hover {
+            color: #000;
+            outline: 2px solid var(--primary);
+            outline-offset: 2px
+        }
+
+        .portfolio-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow)
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            opacity: 0;
+            transition: .35s
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1
+        }
+
+        /* =========================
+       STATS
+       ========================= */
+        .stats-section {
+            background: var(--bg-soft);
+            padding: 50px 0;
+            text-align: center
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px
+        }
+
+        .stat-box {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow)
+        }
+
+        .stat-box i {
+            font-size: 40px;
+            color: var(--primary)
+        }
+
+        .stat-box h3 {
+            font-size: 26px;
+            font-weight: 900;
+            margin: 6px 0
+        }
+
+        .stat-box p {
+            color: #444;
+            margin: 0
+        }
+
+        /* =========================
+       BLOG
+       ========================= */
+        .blog {
+            background: var(--bg-soft);
+            padding: 70px 0;
+            text-align: center
+        }
+
+        .blog-title {
+            font-size: 32px;
+            margin: 0 0 6px
+        }
+
+        .blog-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 28px
+        }
+
+        .blog-item {
+            background: var(--card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: left
+        }
+
+        .blog-item img,
+        .blog-item iframe {
+            width: 100%;
+            display: block
+        }
+
+        .blog-content {
+            padding: 18px
+        }
+
+        .blog-content .date {
+            font-size: 14px;
+            color: #666
+        }
+
+        .blog-content h3 {
+            font-size: 18px;
+            margin: 8px 0
+        }
+
+        .blog-content p {
+            font-size: 14px;
+            color: #444;
+            margin: 0 0 8px
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 6px;
+            font-weight: 800
+        }
+
+        .read-more:hover {
+            color: var(--primary)
+        }
+
+        /* =========================
+       CONTACT
+       ========================= */
+        .contact-section {
+            max-width: 760px;
+            margin: 70px auto;
+            text-align: center;
+            background: var(--card);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: var(--shadow)
+        }
+
+        .contact-section h3 {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 0 0 6px
+        }
+
+        .contact-form {
+            margin-top: 14px;
+            text-align: left
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .form-group {
+            margin-bottom: 16px
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text)
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: none
+        }
+
+        .error {
+            color: var(--primary);
+            font-size: 13px;
+            margin-top: 6px;
+            display: none
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 900;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .25s;
+            box-shadow: var(--shadow)
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            background: #e22d51
+        }
+
+        /* =========================
+       FOOTER
+       ========================= */
+        .footer {
+            background: #333;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center
+        }
+
+        .footer .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #fff;
+            font-size: 20px;
+            transition: .25s
+        }
+
+        .footer .social-icons a:hover {
+            color: #ff4757
+        }
+
+        .footer p {
+            font-size: 14px;
+            margin: 8px 0 0
+        }
+
+        .footer p span {
+            color: #ff4757;
+            font-weight: 800
+        }
+
+        /* =========================
+       UTILITIES
+       ========================= */
+        .hide {
+            display: none !important
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: .6s
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: none
+        }
+
+        /* Back to top */
+        #backToTop {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 999;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: var(--primary);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            pointer-events: none;
+            transition: .25s
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        /* =========================
+       MEDIA QUERIES
+       ========================= */
+
+        /* Large Desktop tweaks */
+        @media (min-width:1400px) {
+            .container {
+                max-width: 1320px
+            }
+
+            .Hero .content h1 {
+                font-size: 78px
+            }
+        }
+
+        /* Laptops / standard desktops */
+        @media (max-width:1200px) {
+            .services .wrap {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .portfolio-container {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr)
+            }
+
+            .blog-container {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        /* Tablets / small laptops */
+        @media (max-width:992px) {
+            .Hero .content h1 {
+                font-size: 56px
+            }
+
+            .about .grid {
+                grid-template-columns: 1fr;
+                gap: 28px
+            }
+
+            .services .wrap {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .portfolio-container {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .blog-container {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        /* Phones */
+        @media (max-width:768px) {
+            .navwrap {
+                padding: 10px 0
+            }
+
+            .navbarlinks {
+                position: fixed;
+                top: 60px;
+                right: 0;
+                left: 0;
+                background: rgba(20, 20, 20, .95);
+                padding: 14px 0;
+                display: none
+            }
+
+            .navbarlinks.open {
+                display: block
+            }
+
+            .navbarlinks ul {
+                flex-direction: column
+            }
+
+            .hamburger {
+                display: inline-flex
+            }
+
+            .Hero .content h1 {
+                font-size: 40px
+            }
+
+            .bonus1 {
+                font-size: 20px;
+                width: 20ch;
+                animation: typing 3s steps(20, end), erase 3s steps(20, end) 3s, cursor .75s step-end infinite
+            }
+
+            .services .wrap {
+                grid-template-columns: 1fr
+            }
+
+            .portfolio-container {
+                grid-template-columns: 1fr
+            }
+
+            .blog-container {
+                grid-template-columns: 1fr
+            }
+
+            .contact-section {
+                margin: 50px auto
+            }
+
+            .form-row {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="container navwrap">
+            <div class="navbarlogo"><a href="#HOME">NourAmr</a></div>
+
+            <div class="controls">
+                <button class="btn-icon" id="darkToggle" aria-label="Toggle dark mode"><i
+                        class="fa fa-moon"></i></button>
+                <button class="btn-icon hamburger" id="menuToggle" aria-label="Toggle navigation"><i
+                        class="fa fa-bars"></i></button>
+            </div>
+
+            <nav class="navbarlinks" id="navLinks">
+                <ul>
+                    <li><a class="navlink" href="#HOME">Home</a></li>
+                    <li><a class="navlink" href="#ABOUT">About</a></li>
+                    <li><a class="navlink" href="#SERVICES">Services</a></li>
+                    <li><a class="navlink" href="#portfolio">Portfolio</a></li>
+                    <li><a class="navlink" href="#blog">Blog</a></li>
+                    <li><a class="navlink" href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="Hero" id="HOME">
+        <div class="layer"></div>
+        <div class="content">
+            <div>
+                <span>Hello i'm</span>
+                <h1>nour amr</h1>
+                <div class="bonus">
+                    <p class="bonus1">Professional Web Developer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about reveal" id="ABOUT">
+        <div class="container">
+            <div class="grid">
+                <div class="item">
+                    <div class="border">
+                        <div class="photo-Container-icons">
+                            <img src="images/nour.jpg" alt="Portrait of Nour Amr" />
+                            <div class="awesome-icons">
+                                <div class="icons">
+                                    <a href="https://www.facebook.com/nour.amr.376906/"><i
+                                            class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="https://www.youtube.com/@Nour_Amr12"><i
+                                            class="fa-brands fa-google"></i></a>
+                                    <a href="https://github.com/NooorAmr"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="upper">
+                        <h2>Hello,</h2>
+                        <p>
+                            I’m a Computer Science student (AI major, GPA 3.5) with skills in HTML, CSS, JavaScript,
+                            Java, C++, SQL Server, and OOP concepts. Passionate about technology and problem-solving, my
+                            goal is to become a Software Engineer, creating impactful and innovative solutions.
+                        </p>
+                        <hr />
+                    </div>
+
+                    <div class="lower">
+                        <ul class="info">
+                            <li><span>Name:</span> NourEldeen Amr</li>
+                            <li><span>Job Title:</span> FrontEnd Developer</li>
+                            <li><span>Age:</span> 20 Years</li>
+                            <li><span>Location:</span> Egypt , EG</li>
+                            <li><span>Freelance:</span> Available</li>
+                            <li><span>E-mail:</span> <a href="mailto:noureldeenamrsalem@gmail.com">nour@gmail.com</a>
+                            </li>
+                        </ul>
+
+                        <div class="buttons">
+                            <a href="#" class="btn"><i class="fa fa-download"></i> Download CV</a>
+                            <a href="#contact" class="btn"><i class="fa fa-paper-plane"></i> Hire Me</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services reveal" id="SERVICES">
+        <div class="container">
+            <h2>Our Services</h2>
+            <span class="line"></span><span class="line small"></span><span class="line"></span>
+
+            <div class="wrap">
+                <div class="service-box">
+                    <i class="fa-solid fa-pencil-ruler icon"></i>
+                    <h3>UI/UX DESIGN</h3>
+                    <p>I design intuitive and user-friendly interfaces that focus on clarity, usability, and a smooth
+                        user experience.</p>
+                </div>
+
+                <div class="service-box">
+                    <i class="fa-solid fa-code icon"></i>
+                    <h3>APP DEVELOPMENT</h3>
+                    <p>Building reliable and efficient applications with a focus on performance, scalability, and user
+                        experience and SEO</p>
+                </div>
+
+                <div class="service-box">
+                    <i class="fa-solid fa-chart-line icon"></i>
+                    <h3>PRODUCT DESIGN</h3>
+                    <p>Creating products that combine functionality, aesthetics, and user needs to deliver meaningful
+                        experiences.</p>
+                </div>
+
+                <div class="service-box">
+                    <i class="fa-solid fa-cogs icon"></i>
+                    <h3>SOFTWARE MAINTENANCE</h3>
+                    <p>Ensuring software remains reliable, secure, and up-to-date through continuous improvements and
+                        support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="our-portfolio reveal" id="portfolio">
+        <div class="container">
+            <h2>Our Portfolio</h2>
+            <span class="line"></span><span class="line small"></span><span class="line"></span>
+
+            <div class="categories" id="filters">
+                <a href="#" data-filter="all" class="active">ALL</a>
+                <a href="#" data-filter="graphic">GRAPHIC</a>
+                <a href="#" data-filter="web">WEB DESIGN</a>
+                <a href="#" data-filter="branding">BRANDING</a>
+            </div>
+
+            <div class="portfolio-container">
+                <div class="portfolio-item" data-cat="web">
+                    <img src="images/Capture.PNG" alt="portfolio web 1" />
+                    <div class="overlay"></div>
+                </div>
+                <div class="portfolio-item" data-cat="graphic">
+                    <img src="images/Capture2.PNG" alt="portfolio graphic 1" />
+                    <div class="overlay"></div>
+                </div>
+                <div class="portfolio-item" data-cat="branding">
+                    <img src="images/Capture3.PNG" alt="portfolio branding 1" />
+                    <div class="overlay"></div>
+                </div>
+                <div class="portfolio-item" data-cat="web">
+                    <img src="images/Capture4.PNG" alt="portfolio web 2" />
+                    <div class="overlay"></div>
+                </div>
+                <div class="portfolio-item" data-cat="graphic">
+                    <img src="images/Capture5.PNG" alt="portfolio graphic 2" />
+                    <div class="overlay"></div>
+                </div>
+                <div class="portfolio-item" data-cat="branding">
+                    <img src="images/Capture6.PNG" alt="portfolio branding 2" />
+                    <div class="overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section reveal">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <i class="fa-solid fa-users"></i>
+                    <h3 class="counter" data-target="65">0</h3>
+                    <p>Team members</p>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-regular fa-file"></i>
+                    <h3 class="counter" data-target="112">0</h3>
+                    <p>Complete Projects</p>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                    <h3 class="counter" data-target="592">0</h3>
+                    <p>Files Downloaded</p>
+                </div>
+                <div class="stat-box">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <h3 class="counter" data-target="394">0</h3>
+                    <p>Lines Of Code</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="blog reveal" id="blog">
+        <div class="container">
+            <h2 class="blog-title">Our Blog</h2>
+            <span class="line"></span><span class="line small"></span><span class="line"></span>
+
+            <div class="blog-container">
+                <div class="blog-item">
+                    <a href="#"><img src="images/blog/12.jpg" alt="Blog Image 1" /></a>
+                    <div class="blog-content">
+                        <p class="date">23 November, 2015</p>
+                        <h3>Web Design Blog Post</h3>
+                        <p>Exploring how design choices shape the way users interact with the web — simple, clean, and
+                            effective</p>
+                        <a href="https://www.informaticsinc.com/blog/topic/15/web-design-" class="read-more">READ MORE
+                            →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item">
+                    <iframe width="100%" height="200"
+                        src="https://www.youtube.com/embed/uVju5--RqtY?si=oK1QuGiq0RNXGWsp" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <div class="blog-content">
+                        <p class="date">20 April, 2018</p>
+                        <h3>Development Blog Post</h3>
+                        <p>Envato’s video showcases the power of creative collaboration—from accessible tools.</p>
+                        <a href="https://example.com" class="read-more">READ MORE →</a>
+                    </div>
+                </div>
+
+                <div class="blog-item">
+                    <a href="#"><img src="images/blog/32.jpg" alt="Blog Image 2" /></a>
+                    <div class="blog-content">
+                        <p class="date">17 May, 2017</p>
+                        <h3>Full Width Blog Post</h3>
+                        <p>Stories, insights, and lessons from my journey in tech — where creativity meets code..</p>
+                        <a href="https://theme.co/docs/create-full-width-blog-posts" class="read-more">READ MORE →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section reveal" id="contact">
+        <h3>Contact Us</h3>
+        <span class="line"></span><span class="line small"></span><span class="line"></span>
+
+        <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" placeholder="Name" name="userfirstname" id="name" required />
+                    <span class="error">Firstname is required.</span>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" name="useremail" id="email" required />
+                    <span class="error">Valid email is required.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" placeholder="Subject" name="Subject" id="subject" required />
+                <span class="error">Subject is required.</span>
+            </div>
+
+            <div class="form-group">
+                <textarea placeholder="Message for me" id="message" required></textarea>
+                <span class="error">Message is required.</span>
+            </div>
+
+            <button type="submit" class="btn-submit">SEND MESSAGE</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/nour.amr.376906/"><i class="fab fa-facebook-f"></i></a>
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href="https://www.youtube.com/@Nour_Amr12"><i class="fab fa-google"></i></a>
+                <a href="https://github.com/NooorAmr"><i class="fab fa-github"></i></a>
+            </div>
+            <p>Copy Right 2018 © By <span><a href="#">NourAmr</a></span> All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button id="backToTop" aria-label="Back to top"><i class="fa fa-arrow-up"></i></button>
+
+    <script>
+        // =============== HELPERS ===============
+        const $ = (sel, scope = document) => scope.querySelector(sel);
+        const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
+
+        // =============== MOBILE MENU ===============
+        const menuToggle = $('#menuToggle');
+        const navLinks = $('#navLinks');
+
+        const closeMenu = () => navLinks.classList.remove('open');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+            // Close on link click (mobile)
+            $$('.navlink', navLinks).forEach(a => a.addEventListener('click', closeMenu));
+            // Close on outside click
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+            });
+        }
+
+        // =============== SMOOTH SCROLL + ACTIVE LINK ===============
+        const links = $$('.navlink');
+        const sections = links.map(a => $(a.getAttribute('href'))).filter(Boolean);
+
+        const setActive = () => {
+            const pos = window.scrollY + 120;
+            sections.forEach((sec, i) => {
+                const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+                if (pos >= top && pos < bottom) {
+                    links.forEach(l => l.classList.remove('active'));
+                    links[i].classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', setActive);
+        window.addEventListener('load', setActive);
+
+        // =============== DARK MODE ===============
+        const darkToggle = $('#darkToggle');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.body.classList.add('dark');
+
+        const updateDarkIcon = () => {
+            darkToggle.innerHTML = document.body.classList.contains('dark')
+                ? '<i class="fa fa-sun"></i>'
+                : '<i class="fa fa-moon"></i>';
+        };
+        updateDarkIcon();
+
+        darkToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+            updateDarkIcon();
+        });
+
+        // =============== SCROLL REVEAL ===============
+        const revealEls = $$('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: .12 });
+        revealEls.forEach(el => io.observe(el));
+
+        // =============== BACK TO TOP ===============
+        const backToTop = $('#backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // =============== COUNTERS (stats) ===============
+        const counters = $$('.counter');
+        const ioCounters = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = +el.dataset.target;
+                    const dur = 1400; // ms
+                    const start = performance.now();
+                    const startVal = 0;
+                    const animate = (t) => {
+                        const p = Math.min((t - start) / dur, 1);
+                        el.textContent = Math.floor(startVal + (target - startVal) * p);
+                        if (p < 1) requestAnimationFrame(animate);
+                    };
+                    requestAnimationFrame(animate);
+                    ioCounters.unobserve(el);
+                }
+            });
+        }, { threshold: .3 });
+        counters.forEach(c => ioCounters.observe(c));
+
+        // =============== PORTFOLIO FILTER ===============
+        const filters = $('#filters');
+        if (filters) {
+            filters.addEventListener('click', (e) => {
+                const a = e.target.closest('a[data-filter]');
+                if (!a) return;
+                e.preventDefault();
+                $$('#filters a').forEach(x => x.classList.remove('active'));
+                a.classList.add('active');
+                const key = a.dataset.filter;
+                $$('.portfolio-item').forEach(card => {
+                    const show = key === 'all' || card.dataset.cat === key;
+                    card.style.display = show ? 'block' : 'none';
+                });
+            });
+        }
+
+        // =============== CONTACT FORM VALIDATION ===============
+        const form = $('#contactForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let ok = true;
+
+            const showErr = (input, msg) => {
+                const err = input.parentElement.querySelector('.error');
+                if (err) { err.textContent = msg; err.style.display = 'block'; }
+                input.style.borderColor = 'var(--primary)';
+                ok = false;
+            };
+            const clearErr = (input) => {
+                const err = input.parentElement.querySelector('.error');
+                if (err) { err.style.display = 'none'; }
+                input.style.borderColor = '#ccc';
+            };
+
+            const name = $('#name'), email = $('#email'), subject = $('#subject'), message = $('#message');
+
+            [name, email, subject, message].forEach(clearErr);
+
+            if (!name.value.trim()) showErr(name, 'Firstname is required.');
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRe.test(email.value.trim())) showErr(email, 'Valid email is required.');
+            if (!subject.value.trim()) showErr(subject, 'Subject is required.');
+            if (!message.value.trim()) showErr(message, 'Message is required.');
+
+            if (ok) {
+                alert('Thanks! Your message has been sent (demo).');
+                form.reset();
+            }
+        });
+
+        // Close mobile menu on resize up
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeMenu();
+        });
+    </script>
+</body>
+
+</html>
